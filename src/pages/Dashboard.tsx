@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -6,6 +7,9 @@ import AQIStats from "../components/AQIStats";
 import AQIHeatMap from "../components/AQIHeatMap";
 import CitySelector from "../components/CitySelector";
 import LocationDetector from "../components/LocationDetector";
+import FeedbackPopup from "../components/FeedbackPopup";
+import { getCitiesWithDetails } from "../data/extendedCities";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface City {
   name: string;
@@ -17,6 +21,7 @@ interface City {
 const YOUR_WAQI_TOKEN = "faba131edfb91703b6cec6fbc93752a3b7307e95";
 
 const Dashboard = () => {
+  const { t } = useLanguage();
   const [selectedCity, setSelectedCity] = useState<City>({
     name: "Delhi",
     state: "Delhi",
@@ -26,6 +31,21 @@ const Dashboard = () => {
   const [aqi, setAqi] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showFeedback, setShowFeedback] = useState(false);
+  const [hasSeenFeedback, setHasSeenFeedback] = useState(false);
+
+  const cities = getCitiesWithDetails();
+
+  useEffect(() => {
+    // Show feedback popup after 5 seconds if not seen before
+    const hasSeenFeedbackToday = localStorage.getItem(`feedback_${new Date().toDateString()}`);
+    if (!hasSeenFeedbackToday && !hasSeenFeedback) {
+      setTimeout(() => {
+        setShowFeedback(true);
+        setHasSeenFeedback(true);
+      }, 5000);
+    }
+  }, [hasSeenFeedback]);
 
   const fetchAqi = async (cityName: string) => {
     setLoading(true);
@@ -66,14 +86,24 @@ const Dashboard = () => {
     setSelectedCity(detectedCity);
   };
 
+  const handleCloseFeedback = () => {
+    setShowFeedback(false);
+    localStorage.setItem(`feedback_${new Date().toDateString()}`, 'seen');
+  };
+
+  const handleSkipFeedback = () => {
+    setShowFeedback(false);
+    localStorage.setItem(`feedback_${new Date().toDateString()}`, 'skipped');
+  };
+
   const getAQILevel = (aqi: number | null) => {
     if (aqi === null) return { level: "Unknown", color: "bg-gray-300", textColor: "text-gray-700 dark:text-gray-300" };
-    if (aqi <= 50) return { level: "Good", color: "bg-green-500", textColor: "text-green-700 dark:text-green-400" };
-    if (aqi <= 100) return { level: "Moderate", color: "bg-yellow-500", textColor: "text-yellow-700 dark:text-yellow-400" };
-    if (aqi <= 150) return { level: "Unhealthy for Sensitive", color: "bg-orange-500", textColor: "text-orange-700 dark:text-orange-400" };
-    if (aqi <= 200) return { level: "Unhealthy", color: "bg-red-500", textColor: "text-red-700 dark:text-red-400" };
-    if (aqi <= 300) return { level: "Very Unhealthy", color: "bg-purple-500", textColor: "text-purple-700 dark:text-purple-400" };
-    return { level: "Hazardous", color: "bg-gray-800", textColor: "text-gray-100 dark:text-gray-300" };
+    if (aqi <= 50) return { level: t('aqi.good'), color: "bg-green-500", textColor: "text-green-700 dark:text-green-400" };
+    if (aqi <= 100) return { level: t('aqi.moderate'), color: "bg-yellow-500", textColor: "text-yellow-700 dark:text-yellow-400" };
+    if (aqi <= 150) return { level: t('aqi.unhealthy_sensitive'), color: "bg-orange-500", textColor: "text-orange-700 dark:text-orange-400" };
+    if (aqi <= 200) return { level: t('aqi.unhealthy'), color: "bg-red-500", textColor: "text-red-700 dark:text-red-400" };
+    if (aqi <= 300) return { level: t('aqi.very_unhealthy'), color: "bg-purple-500", textColor: "text-purple-700 dark:text-purple-400" };
+    return { level: t('aqi.hazardous'), color: "bg-gray-800", textColor: "text-gray-100 dark:text-gray-300" };
   };
 
   const aqiInfo = getAQILevel(aqi);
@@ -93,7 +123,7 @@ const Dashboard = () => {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-            Real-Time AQI Dashboard
+            {t('dashboard.title')}
           </h1>
           <div className="flex items-center space-x-4 max-w-2xl">
             <div className="flex-1">
@@ -115,14 +145,14 @@ const Dashboard = () => {
                   </CardTitle>
                 </div>
                 <Badge variant="secondary" className="dark:bg-gray-700 dark:text-gray-300">
-                  Live
+                  {t('dashboard.live')}
                 </Badge>
               </div>
             </CardHeader>
             <CardContent>
               <div className="flex items-center justify-between">
                 <div>
-                  {loading && <div className="text-lg text-gray-500">Loading AQI...</div>}
+                  {loading && <div className="text-lg text-gray-500 dark:text-gray-400">{t('common.loading')}</div>}
                   {error && <div className="text-lg text-red-500">{error}</div>}
                   {!loading && !error && (
                     <>
@@ -133,7 +163,7 @@ const Dashboard = () => {
                         {aqiInfo.level}
                       </div>
                       <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                        Last updated: {new Date().toLocaleTimeString()}
+                        {t('dashboard.last_updated')}: {new Date().toLocaleTimeString()}
                       </p>
                     </>
                   )}
@@ -201,6 +231,13 @@ const Dashboard = () => {
           <AQIHeatMap />
         </div>
       </div>
+
+      {/* Feedback Popup */}
+      <FeedbackPopup 
+        isOpen={showFeedback}
+        onClose={handleCloseFeedback}
+        onSkip={handleSkipFeedback}
+      />
     </div>
   );
 };

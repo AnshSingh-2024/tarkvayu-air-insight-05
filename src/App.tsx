@@ -16,6 +16,7 @@ import Dashboard from "./pages/Dashboard";
 import Trends from "./pages/Trends";
 import Forecast from "./pages/Forecast";
 import Health from "./pages/Health";
+import Exercises from "./pages/Exercises";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 
@@ -62,6 +63,7 @@ const App = () => {
                 <Route path="/trends" element={<Trends />} />
                 <Route path="/forecast" element={<Forecast />} />
                 <Route path="/health" element={<Health />} />
+                <Route path="/exercises" element={<Exercises />} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>

@@ -3,11 +3,13 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Moon, Sun } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
   const location = useLocation();
+  const { t } = useLanguage();
 
   // Initialize theme from localStorage or system preference
   useEffect(() => {
@@ -36,12 +38,13 @@ const Navbar = () => {
   const isActive = (path: string) => location.pathname === path;
 
   const navItems = [
-    { path: "/", label: "Home" },
-    { path: "/dashboard", label: "Dashboard" },
-    { path: "/trends", label: "Trends" },
-    { path: "/forecast", label: "Forecast" },
-    { path: "/health", label: "Health" },
-    { path: "/settings", label: "Settings" },
+    { path: "/", label: t('nav.home') },
+    { path: "/dashboard", label: t('nav.dashboard') },
+    { path: "/trends", label: t('nav.trends') },
+    { path: "/forecast", label: t('nav.forecast') },
+    { path: "/health", label: t('nav.health') },
+    { path: "/exercises", label: t('nav.exercises') },
+    { path: "/settings", label: t('nav.settings') },
   ];
 
   return (
@@ -53,7 +56,7 @@ const Navbar = () => {
             <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-blue-500 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-sm">T</span>
             </div>
-            <span className="text-xl font-bold text-gray-800 dark:text-white">TarkVayu</span>
+            <span className="text-xl font-bold text-gray-800 dark:text-white">{t('app.title')}</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -83,7 +86,7 @@ const Navbar = () => {
             
             <Link to="/login">
               <Button variant="outline" size="sm" className="dark:border-gray-600 dark:text-gray-300">
-                Login
+                {t('nav.login')}
               </Button>
             </Link>
           </div>
@@ -130,7 +133,7 @@ const Navbar = () => {
                 </Button>
                 <Link to="/login">
                   <Button variant="outline" size="sm" className="dark:border-gray-600 dark:text-gray-300">
-                    Login
+                    {t('nav.login')}
                   </Button>
                 </Link>
               </div>
