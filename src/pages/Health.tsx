@@ -10,7 +10,7 @@ const Health = () => {
       range: "0-50",
       status: "Good",
       color: "bg-green-500",
-      textColor: "text-green-700",
+      textColor: "text-white",
       bgColor: "bg-green-50",
       borderColor: "border-green-200",
       icon: <CheckCircle className="h-6 w-6 text-green-600" />,
@@ -27,7 +27,7 @@ const Health = () => {
       range: "51-100",
       status: "Moderate",
       color: "bg-yellow-500",
-      textColor: "text-yellow-700",
+      textColor: "text-gray-900",
       bgColor: "bg-yellow-50",
       borderColor: "border-yellow-200",
       icon: <AlertTriangle className="h-6 w-6 text-yellow-600" />,
@@ -47,7 +47,7 @@ const Health = () => {
       range: "101-150",
       status: "Unhealthy for Sensitive Groups",
       color: "bg-orange-500",
-      textColor: "text-orange-700",
+      textColor: "text-white",
       bgColor: "bg-orange-50",
       borderColor: "border-orange-200",
       icon: <AlertCircle className="h-6 w-6 text-orange-600" />,
@@ -69,7 +69,7 @@ const Health = () => {
       range: "151-200",
       status: "Unhealthy",
       color: "bg-red-500",
-      textColor: "text-red-700",
+      textColor: "text-white",
       bgColor: "bg-red-50",
       borderColor: "border-red-200",
       icon: <XCircle className="h-6 w-6 text-red-600" />,
@@ -92,7 +92,7 @@ const Health = () => {
       range: "201-300",
       status: "Very Unhealthy",
       color: "bg-purple-600",
-      textColor: "text-purple-700",
+      textColor: "text-white",
       bgColor: "bg-purple-50",
       borderColor: "border-purple-200",
       icon: <XCircle className="h-6 w-6 text-purple-600" />,
@@ -115,7 +115,7 @@ const Health = () => {
       range: "300+",
       status: "Hazardous",
       color: "bg-gray-800",
-      textColor: "text-gray-100",
+      textColor: "text-white",
       bgColor: "bg-gray-100",
       borderColor: "border-gray-400",
       icon: <XCircle className="h-6 w-6 text-gray-800" />,
@@ -200,36 +200,36 @@ const Health = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
             Health Advisory & Guidelines
           </h1>
-          <p className="text-gray-600">
+          <p className="text-gray-600 dark:text-gray-300">
             Comprehensive health recommendations based on current air quality levels
           </p>
         </div>
 
         {/* Current AQI Status */}
-        <Card className="mb-8 bg-gradient-to-r from-blue-50 to-green-50 border-2">
+        <Card className="mb-8 bg-gradient-to-r from-blue-50 to-green-50 dark:from-blue-900/20 dark:to-green-900/20 border-2">
           <CardContent className="p-8">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-2xl font-semibold text-gray-900 mb-2">
+                <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">
                   Current Health Impact - Delhi
                 </h2>
                 <div className="flex items-center space-x-4">
-                  <div className="text-4xl font-bold text-red-600">156</div>
+                  <div className="text-4xl font-bold text-red-600 dark:text-red-400">156</div>
                   <div>
-                    <Badge className="text-red-700 bg-red-50 border-red-200">
+                    <Badge className="text-red-700 dark:text-red-300 bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-700">
                       Unhealthy
                     </Badge>
-                    <p className="text-gray-600 mt-1">
+                    <p className="text-gray-600 dark:text-gray-300 mt-1">
                       Everyone should limit outdoor activities
                     </p>
                   </div>
                 </div>
               </div>
-              <div className="p-4 bg-red-100 rounded-full">
-                <Heart className="h-8 w-8 text-red-600" />
+              <div className="p-4 bg-red-100 dark:bg-red-900/20 rounded-full">
+                <Heart className="h-8 w-8 text-red-600 dark:text-red-400" />
               </div>
             </div>
           </CardContent>
@@ -240,24 +240,24 @@ const Health = () => {
 
         {/* Detailed AQI Level Guidelines */}
         <div className="mt-12 mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
             Detailed Health Guidelines by AQI Level
           </h2>
           <div className="space-y-6">
             {aqiLevels.map((level, index) => (
-              <Card key={index} className={`border-l-4 ${level.borderColor}`}>
+              <Card key={index} className={`border-l-4 ${level.borderColor} dark:border-l-4 dark:border-opacity-60`}>
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-4">
                       {level.icon}
                       <div>
                         <CardTitle className="flex items-center space-x-2">
-                          <span>{level.status}</span>
-                          <Badge className={`${level.textColor} ${level.bgColor} ${level.borderColor}`}>
+                          <span className="text-gray-900 dark:text-white">{level.status}</span>
+                          <Badge className={`${level.textColor} ${level.bgColor} ${level.borderColor} dark:bg-opacity-20 dark:border-opacity-60`}>
                             AQI {level.range}
                           </Badge>
                         </CardTitle>
-                        <p className="text-gray-600 mt-1">{level.description}</p>
+                        <p className="text-gray-600 dark:text-gray-300 mt-1">{level.description}</p>
                       </div>
                     </div>
                   </div>
@@ -265,14 +265,14 @@ const Health = () => {
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <h4 className="font-semibold text-gray-900 mb-3 flex items-center space-x-2">
-                        <CheckCircle className="h-4 w-4 text-green-600" />
+                      <h4 className="font-semibold text-gray-900 dark:text-white mb-3 flex items-center space-x-2">
+                        <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400" />
                         <span>Recommended Activities</span>
                       </h4>
                       <ul className="space-y-2">
                         {level.activities.map((activity, idx) => (
-                          <li key={idx} className="flex items-start space-x-2 text-sm text-gray-700">
-                            <div className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                          <li key={idx} className="flex items-start space-x-2 text-sm text-gray-700 dark:text-gray-300">
+                            <div className="w-1.5 h-1.5 bg-green-500 dark:bg-green-400 rounded-full mt-2 flex-shrink-0"></div>
                             <span>{activity}</span>
                           </li>
                         ))}
@@ -281,14 +281,14 @@ const Health = () => {
                     
                     {level.precautions.length > 0 && (
                       <div>
-                        <h4 className="font-semibold text-gray-900 mb-3 flex items-center space-x-2">
-                          <Shield className="h-4 w-4 text-blue-600" />
+                        <h4 className="font-semibold text-gray-900 dark:text-white mb-3 flex items-center space-x-2">
+                          <Shield className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                           <span>Health Precautions</span>
                         </h4>
                         <ul className="space-y-2">
                           {level.precautions.map((precaution, idx) => (
-                            <li key={idx} className="flex items-start space-x-2 text-sm text-gray-700">
-                              <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                            <li key={idx} className="flex items-start space-x-2 text-sm text-gray-700 dark:text-gray-300">
+                              <div className="w-1.5 h-1.5 bg-blue-500 dark:bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
                               <span>{precaution}</span>
                             </li>
                           ))}
@@ -304,14 +304,14 @@ const Health = () => {
 
         {/* Vulnerable Groups */}
         <div className="mt-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
             Special Guidelines for Vulnerable Groups
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {vulnerableGroups.map((group, index) => (
-              <Card key={index} className="hover:shadow-lg transition-shadow duration-300">
+              <Card key={index} className="hover:shadow-lg transition-shadow duration-300 dark:bg-gray-800/50 dark:border-gray-700">
                 <CardHeader>
-                  <CardTitle className="flex items-center space-x-3">
+                  <CardTitle className="flex items-center space-x-3 text-gray-900 dark:text-white">
                     <span className="text-2xl">{group.icon}</span>
                     <span>{group.group}</span>
                   </CardTitle>
@@ -319,11 +319,11 @@ const Health = () => {
                 <CardContent>
                   <div className="space-y-4">
                     <div>
-                      <h4 className="font-semibold text-red-700 mb-2">Health Risks</h4>
+                      <h4 className="font-semibold text-red-700 dark:text-red-400 mb-2">Health Risks</h4>
                       <ul className="space-y-1">
                         {group.risks.map((risk, idx) => (
-                          <li key={idx} className="flex items-start space-x-2 text-sm text-gray-700">
-                            <div className="w-1.5 h-1.5 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
+                          <li key={idx} className="flex items-start space-x-2 text-sm text-gray-700 dark:text-gray-300">
+                            <div className="w-1.5 h-1.5 bg-red-500 dark:bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
                             <span>{risk}</span>
                           </li>
                         ))}
@@ -331,11 +331,11 @@ const Health = () => {
                     </div>
                     
                     <div>
-                      <h4 className="font-semibold text-green-700 mb-2">Recommendations</h4>
+                      <h4 className="font-semibold text-green-700 dark:text-green-400 mb-2">Recommendations</h4>
                       <ul className="space-y-1">
                         {group.recommendations.map((rec, idx) => (
-                          <li key={idx} className="flex items-start space-x-2 text-sm text-gray-700">
-                            <div className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                          <li key={idx} className="flex items-start space-x-2 text-sm text-gray-700 dark:text-gray-300">
+                            <div className="w-1.5 h-1.5 bg-green-500 dark:bg-green-400 rounded-full mt-2 flex-shrink-0"></div>
                             <span>{rec}</span>
                           </li>
                         ))}
@@ -349,9 +349,9 @@ const Health = () => {
         </div>
 
         {/* Emergency Contact Information */}
-        <Card className="mt-8 bg-gradient-to-r from-red-50 to-orange-50 border-red-200">
+        <Card className="mt-8 bg-gradient-to-r from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 border-red-200 dark:border-red-700">
           <CardHeader>
-            <CardTitle className="flex items-center space-x-2 text-red-800">
+            <CardTitle className="flex items-center space-x-2 text-red-800 dark:text-red-400">
               <AlertCircle className="h-6 w-6" />
               <span>Emergency Health Information</span>
             </CardTitle>
@@ -359,8 +359,8 @@ const Health = () => {
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
               <div>
-                <h4 className="font-semibold text-gray-900 mb-2">When to Seek Medical Help</h4>
-                <ul className="space-y-1 text-gray-700">
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">When to Seek Medical Help</h4>
+                <ul className="space-y-1 text-gray-700 dark:text-gray-300">
                   <li>• Difficulty breathing or shortness of breath</li>
                   <li>• Persistent cough or wheezing</li>
                   <li>• Chest pain or tightness</li>
@@ -369,8 +369,8 @@ const Health = () => {
                 </ul>
               </div>
               <div>
-                <h4 className="font-semibold text-gray-900 mb-2">Emergency Contacts</h4>
-                <ul className="space-y-1 text-gray-700">
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Emergency Contacts</h4>
+                <ul className="space-y-1 text-gray-700 dark:text-gray-300">
                   <li>• National Emergency: <strong>108</strong></li>
                   <li>• Ambulance: <strong>102</strong></li>
                   <li>• Poison Control: <strong>1066</strong></li>
