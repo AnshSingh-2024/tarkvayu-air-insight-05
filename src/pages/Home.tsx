@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -16,7 +15,7 @@ const Home = () => {
     },
     {
       icon: <TrendingUp className="h-8 w-8 text-green-500" />,
-      title: "Smart Forecasting",
+      title: "Smart Forecasting", 
       description: "AI-powered 72-hour air quality predictions to plan your activities."
     },
     {
@@ -39,7 +38,7 @@ const Home = () => {
     },
     {
       name: "Priya Sharma",
-      location: "Patna, Bihar",
+      location: "Patna, Bihar", 
       text: "The health advisories are incredibly helpful. I know when to keep my kids indoors during high pollution."
     },
     {
@@ -69,17 +68,17 @@ const Home = () => {
           <div className="max-w-2xl mx-auto mb-12">
             <div className="flex flex-col sm:flex-row gap-4 bg-white/10 backdrop-blur-md p-6 rounded-2xl">
               <div className="flex-1 relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/70 h-5 w-5" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-700 dark:text-white/70 h-5 w-5" />
                 <Input
                   type="text"
                   placeholder="Enter your city or pin code..."
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
-                  className="pl-10 bg-white/20 border-white/30 text-white placeholder-white/70 h-12"
+                  className="pl-10 bg-white/90 dark:bg-white/20 border-white/30 text-gray-900 dark:text-white placeholder-gray-600 dark:placeholder-white/70 h-12"
                 />
               </div>
               <Link to="/dashboard">
-                <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100 h-12 px-8">
+                <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100 dark:bg-white dark:text-blue-600 dark:hover:bg-gray-100 h-12 px-8">
                   Check AQI Now
                 </Button>
               </Link>
@@ -89,12 +88,12 @@ const Home = () => {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/dashboard">
-              <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100">
+              <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100 dark:bg-white dark:text-blue-600 dark:hover:bg-gray-100">
                 View Dashboard
               </Button>
             </Link>
             <Link to="/forecast">
-              <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100">
+              <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100 dark:bg-white dark:text-blue-600 dark:hover:bg-gray-100">
                 See Forecast
               </Button>
             </Link>
@@ -194,12 +193,12 @@ const Home = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/dashboard">
-              <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100">
+              <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100 dark:bg-white dark:text-blue-600 dark:hover:bg-gray-100">
                 Get Started Now
               </Button>
             </Link>
             <Link to="/login">
-              <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100">
+              <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100 dark:bg-white dark:text-blue-600 dark:hover:bg-gray-100">
                 Create Account
               </Button>
             </Link>

@@ -43,7 +43,7 @@ const LoginPopup = ({ isOpen, onClose, onSkip }: LoginPopupProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md bg-white dark:bg-gray-800 border-2 border-gradient-to-r from-blue-500 to-green-500">
+      <DialogContent className="sm:max-w-md bg-white dark:bg-gray-800 border-2 border-gradient-to-r from-blue-500 to-green-500 [&>button]:hidden">
         <DialogHeader>
           <div className="flex items-center justify-between">
             <DialogTitle className="text-2xl font-bold text-gray-900 dark:text-white">
