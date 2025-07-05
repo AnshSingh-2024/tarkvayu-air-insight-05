@@ -1,209 +1,280 @@
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, MapPin, TrendingUp, Heart, Bell } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { 
+  Wind, 
+  MapPin, 
+  TrendingUp, 
+  Shield, 
+  Users, 
+  Star,
+  CheckCircle,
+  Globe,
+  Smartphone,
+  BarChart3,
+  Heart,
+  Search
+} from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { Link, useNavigate } from "react-router-dom";
 
 const Home = () => {
-  const [location, setLocation] = useState("");
+  const { t } = useLanguage();
+  const navigate = useNavigate();
+  const [searchCity, setSearchCity] = useState("");
+
+  const handleSearchCity = () => {
+    if (searchCity.trim()) {
+      navigate(`/dashboard?city=${encodeURIComponent(searchCity)}`);
+    }
+  };
+
+  const handleCheckAQI = () => {
+    navigate('/dashboard');
+  };
 
   const features = [
     {
-      icon: <MapPin className="h-8 w-8 text-blue-500" />,
-      title: "Hyperlocal AQI",
-      description: "Get precise air quality data for your exact location, not just major cities."
+      icon: <Wind className="h-8 w-8 text-blue-600" />,
+      title: t('home.features.realtime.title'),
+      description: t('home.features.realtime.description')
     },
     {
-      icon: <TrendingUp className="h-8 w-8 text-green-500" />,
-      title: "Smart Forecasting",
-      description: "AI-powered 72-hour air quality predictions to plan your activities."
+      icon: <MapPin className="h-8 w-8 text-green-600" />,
+      title: t('home.features.coverage.title'),
+      description: t('home.features.coverage.description')
     },
     {
-      icon: <Heart className="h-8 w-8 text-red-500" />,
-      title: "Health Advisory",
-      description: "Personalized health recommendations based on current air quality."
+      icon: <TrendingUp className="h-8 w-8 text-purple-600" />,
+      title: t('home.features.forecasting.title'),
+      description: t('home.features.forecasting.description')
     },
     {
-      icon: <Bell className="h-8 w-8 text-yellow-500" />,
-      title: "Smart Alerts",
-      description: "Timely notifications about pollution spikes and health advisories."
+      icon: <Shield className="h-8 w-8 text-red-600" />,
+      title: t('home.features.health.title'),
+      description: t('home.features.health.description')
     }
+  ];
+
+  const stats = [
+    { number: "200+", label: t('home.stats.cities') },
+    { number: "1M+", label: t('home.stats.users') },
+    { number: "24/7", label: t('home.stats.monitoring') },
+    { number: "99.9%", label: t('home.stats.accuracy') }
   ];
 
   const testimonials = [
     {
-      name: "Rajesh Kumar",
-      location: "Kanpur, UP",
-      text: "Finally, accurate AQI data for my city! TarkVayu helps me protect my family's health every day."
-    },
-    {
       name: "Priya Sharma",
-      location: "Patna, Bihar",
-      text: "The health advisories are incredibly helpful. I know when to keep my kids indoors during high pollution."
+      role: "Delhi Resident",
+      content: "TarkVayu helped me plan my outdoor activities better. The health recommendations are spot-on!",
+      rating: 5
     },
     {
-      name: "Arjun Singh",
-      location: "Gwalior, MP",
-      text: "Love the hyperlocal forecasts. Perfect for planning my morning runs and outdoor activities."
+      name: "Amit Patel",
+      role: "Mumbai Professional",
+      content: "Real-time AQI data for 200+ cities is incredibly useful for my daily commute planning.",
+      rating: 5
+    },
+    {
+      name: "Dr. Rashid Khan",
+      role: "Environmental Scientist",
+      content: "The most accurate and comprehensive air quality monitoring app I've used.",
+      rating: 5
     }
   ];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-green-50 to-cyan-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-600 via-green-500 to-cyan-500 text-white py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-black/20"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-in">
-            Breathe Better with <span className="text-yellow-300">TarkVayu</span>
-          </h1>
-          <p className="text-xl md:text-2xl mb-4 text-blue-100">
-            Breathe It. Beat It. Track It.
-          </p>
-          <p className="text-lg mb-8 text-blue-100 max-w-3xl mx-auto">
-            Granular, Real-Time & Predictive Air Quality Information for Every Indian
-          </p>
-          
-          {/* Search Bar */}
-          <div className="max-w-2xl mx-auto mb-12">
-            <div className="flex flex-col sm:flex-row gap-4 bg-white/10 backdrop-blur-md p-6 rounded-2xl">
-              <div className="flex-1 relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/70 h-5 w-5" />
-                <Input
-                  type="text"
-                  placeholder="Enter your city or pin code..."
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  className="pl-10 bg-white/20 border-white/30 text-white placeholder-white/70 h-12"
-                />
-              </div>
-              <Link to="/dashboard">
-                <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100 h-12 px-8">
-                  Check AQI Now
-                </Button>
-              </Link>
-            </div>
-          </div>
+      <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-green-600/10 dark:from-blue-400/5 dark:to-green-400/5"></div>
+        <div className="relative max-w-7xl mx-auto">
+          <div className="text-center">
+            <Badge className="mb-4 bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300">
+              🇮🇳 Made for India
+            </Badge>
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-white mb-6">
+              <span className="bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
+                {t('home.hero.title')}
+              </span>
+            </h1>
+            <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
+              {t('home.hero.subtitle')}
+            </p>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/dashboard">
-              <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100">
-                View Dashboard
+            {/* Enhanced CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+              <Button 
+                onClick={handleCheckAQI}
+                size="lg" 
+                className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200"
+              >
+                <Wind className="mr-2 h-5 w-5" />
+                {t('home.hero.cta_primary')}
               </Button>
-            </Link>
-            <Link to="/forecast">
-              <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100">
-                See Forecast
-              </Button>
-            </Link>
+              
+              <div className="flex items-center space-x-2 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-full p-2 shadow-lg border border-gray-200 dark:border-gray-600">
+                <Input
+                  placeholder={t('home.hero.search_placeholder')}
+                  value={searchCity}
+                  onChange={(e) => setSearchCity(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && handleSearchCity()}
+                  className="border-0 bg-transparent placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white focus:ring-0 focus:outline-none px-4"
+                />
+                <Button 
+                  onClick={handleSearchCity}
+                  size="sm"
+                  className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white rounded-full px-6 py-2 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"
+                >
+                  <Search className="mr-1 h-4 w-4" />
+                  {t('home.hero.cta_secondary')}
+                </Button>
+              </div>
+            </div>
+
+            {/* Trust Indicators */}
+            <div className="flex flex-wrap justify-center items-center gap-6 text-sm text-gray-600 dark:text-gray-400">
+              <div className="flex items-center space-x-2">
+                <CheckCircle className="h-4 w-4 text-green-600" />
+                <span>{t('home.hero.trust.verified')}</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Globe className="h-4 w-4 text-blue-600" />
+                <span>{t('home.hero.trust.coverage')}</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Smartphone className="h-4 w-4 text-purple-600" />
+                <span>{t('home.hero.trust.mobile')}</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-20 bg-white dark:bg-gray-900">
+      {/* Stats Section */}
+      <section className="py-16 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              Why Choose TarkVayu?
-            </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              Built specifically for India's diverse geography and climate, serving communities often overlooked by metro-focused apps.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
-              <div key={index} className="text-center p-6 rounded-2xl bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-700 border border-gray-100 dark:border-gray-600 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-white dark:bg-gray-600 rounded-2xl shadow-md mb-4">
-                  {feature.icon}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {stats.map((stat, index) => (
+              <div key={index} className="text-center">
+                <div className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
+                  {stat.number}
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300">
-                  {feature.description}
-                </p>
+                <div className="text-gray-600 dark:text-gray-300 font-medium">
+                  {stat.label}
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-50 to-green-50 dark:from-gray-800 dark:to-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <div className="p-8">
-              <div className="text-4xl md:text-5xl font-bold text-blue-600 dark:text-blue-400 mb-2">500+</div>
-              <div className="text-xl text-gray-700 dark:text-gray-200">Cities Covered</div>
-              <div className="text-gray-500 dark:text-gray-400">Including rural and tier-2 cities</div>
-            </div>
-            <div className="p-8">
-              <div className="text-4xl md:text-5xl font-bold text-green-600 dark:text-green-400 mb-2">24/7</div>
-              <div className="text-xl text-gray-700 dark:text-gray-200">Real-time Monitoring</div>
-              <div className="text-gray-500 dark:text-gray-400">Continuous data updates</div>
-            </div>
-            <div className="p-8">
-              <div className="text-4xl md:text-5xl font-bold text-purple-600 dark:text-purple-400 mb-2">72hrs</div>
-              <div className="text-xl text-gray-700 dark:text-gray-200">Forecast Accuracy</div>
-              <div className="text-gray-500 dark:text-gray-400">AI-powered predictions</div>
-            </div>
+      {/* Features Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+              {t('home.features.title')}
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+              {t('home.features.subtitle')}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {features.map((feature, index) => (
+              <Card key={index} className="text-center hover:shadow-lg transition-shadow duration-300 border-0 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
+                <CardHeader>
+                  <div className="mx-auto mb-4 w-16 h-16 bg-gradient-to-br from-blue-50 to-green-50 dark:from-gray-700 dark:to-gray-600 rounded-2xl flex items-center justify-center">
+                    {feature.icon}
+                  </div>
+                  <CardTitle className="text-gray-900 dark:text-white">{feature.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-600 dark:text-gray-300">{feature.description}</p>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-20 bg-white dark:bg-gray-900">
+      {/* Testimonials Section */}
+      <section className="py-20 bg-gradient-to-r from-blue-50 to-green-50 dark:from-gray-800 dark:to-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              What Users Say
+            <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+              {t('home.testimonials.title')}
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-300">
-              Real feedback from real people across India
+              {t('home.testimonials.subtitle')}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
-              <div key={index} className="bg-gradient-to-br from-blue-50 to-green-50 dark:from-gray-800 dark:to-gray-700 p-8 rounded-2xl border border-gray-100 dark:border-gray-600">
-                <p className="text-gray-700 dark:text-gray-300 mb-6 italic">
-                  "{testimonial.text}"
-                </p>
-                <div className="border-t dark:border-gray-600 pt-4">
-                  <div className="font-semibold text-gray-900 dark:text-white">{testimonial.name}</div>
-                  <div className="text-gray-500 dark:text-gray-400 text-sm">{testimonial.location}</div>
-                </div>
-              </div>
+              <Card key={index} className="border-0 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
+                <CardContent className="p-6">
+                  <div className="flex items-center mb-4">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star key={i} className="h-4 w-4 text-yellow-400 fill-current" />
+                    ))}
+                  </div>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4 italic">
+                    "{testimonial.content}"
+                  </p>
+                  <div>
+                    <div className="font-semibold text-gray-900 dark:text-white">{testimonial.name}</div>
+                    <div className="text-sm text-gray-500 dark:text-gray-400">{testimonial.role}</div>
+                  </div>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-green-600 text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Ready to Breathe Better?
-          </h2>
-          <p className="text-xl mb-8 text-blue-100">
-            Join thousands of Indians who trust TarkVayu for their daily air quality information.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/dashboard">
-              <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100">
-                Get Started Now
-              </Button>
-            </Link>
-            <Link to="/login">
-              <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100">
-                Create Account
-              </Button>
-            </Link>
-          </div>
+      <section className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <Card className="border-0 bg-gradient-to-r from-blue-600 to-green-600 text-white overflow-hidden">
+            <CardContent className="p-12">
+              <Heart className="h-12 w-12 mx-auto mb-6" />
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                {t('home.cta.title')}
+              </h2>
+              <p className="text-xl mb-8 text-blue-100">
+                {t('home.cta.description')}
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button 
+                  asChild
+                  size="lg" 
+                  className="bg-white text-blue-600 hover:bg-blue-50 px-8 py-4 rounded-full font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200"
+                >
+                  <Link to="/dashboard">
+                    <BarChart3 className="mr-2 h-5 w-5" />
+                    {t('home.cta.start_monitoring')}
+                  </Link>
+                </Button>
+                <Button 
+                  asChild
+                  variant="outline" 
+                  size="lg" 
+                  className="border-white text-white hover:bg-white hover:text-blue-600 px-8 py-4 rounded-full font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200"
+                >
+                  <Link to="/health">
+                    <Shield className="mr-2 h-5 w-5" />
+                    {t('home.cta.health_tips')}
+                  </Link>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
     </div>
