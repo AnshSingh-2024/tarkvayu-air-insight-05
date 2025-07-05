@@ -44,7 +44,7 @@ const FeedbackPopup = ({ isOpen, onClose, onSkip }: FeedbackPopupProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={() => {}}>
-      <DialogContent className="sm:max-w-md [&>button]:hidden">
+      <DialogContent className="sm:max-w-md" showClose={false}>
         <DialogHeader>
           <div className="flex items-center justify-between">
             <DialogTitle className="text-xl font-semibold">
